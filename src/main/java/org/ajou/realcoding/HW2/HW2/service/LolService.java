@@ -19,13 +19,17 @@ public class LolService {
     public SummonerInfo getsummonerinfo(String summonerName) {
         return developerriotgamesApiClient.requestSummonerInfo(summonerName);
     }
-    public List<EncrypedInfo> getEncrypedinfo(String encrypedId){
-        List<EncrypedInfo> encrypedInfos = developerriotgamesApiClient.requestEncryedInfo(encrypedId);
-       summonerRepository.insertleagueposition(encrypedInfos);
+    public List<EncrypedInfo> getEncrypedinfo(String summonerName){
+        List<EncrypedInfo> encrypedInfos = developerriotgamesApiClient.requestEncryedInfo(developerriotgamesApiClient.requestSummonerInfo(summonerName).getId());
+        if(summonerRepository.findoneifexist(encrypedInfos)){
+            summonerRepository.updateleagueposition(summonerName,encrypedInfos.get(0));
+            System.out.println("db is update");
+        }
+        else {
+            summonerRepository.insertleagueposition(encrypedInfos);
+            System.out.println("inserting data");
+        }
         return encrypedInfos;
     }
-    /*public void updatedb(String encrypedId){
-        encrypedInfos = developerriotgamesApiClient.requestEncryedInfo(encrypedId);
-        summonerRepository.insertleagueposition(encrypedInfos);
-    }*/
+
 }

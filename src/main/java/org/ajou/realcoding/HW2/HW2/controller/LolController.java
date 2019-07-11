@@ -21,12 +21,13 @@ public class LolController {
     public SummonerInfo getsummonerinfobyname(@PathVariable String summonerName){
         return lolService.getsummonerinfo(summonerName);
     }
-    @GetMapping("/HW2/LolService/by-encrypedID/{encrypedID}")
+    /*@GetMapping("/HW2/LolService/by-encrypedID/{encrypedID}")
     public List<EncrypedInfo> getencrypedinfobyencrypedId(@PathVariable String encrypedID){
         return lolService.getEncrypedinfo(encrypedID);
-    }
+    }*/
     @GetMapping("/HW2/LolService/league-position/{summonerName}")
     public List<EncrypedInfo> getleaguepositionbyname(@PathVariable String summonerName){
-        return getencrypedinfobyencrypedId(getsummonerinfobyname(summonerName).getId());
+        return lolService.getEncrypedinfo(summonerName);
+        //return getencrypedinfobyencrypedId(getsummonerinfobyname(summonerName).getId());
     }
 }
